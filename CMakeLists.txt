@@ -3,4 +3,4 @@ project(Tarea_3 C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(Tarea_3 main.c src/functions.h)
+add_executable(Tarea_3 main.c src/functions.h src/TDApueblo.h)

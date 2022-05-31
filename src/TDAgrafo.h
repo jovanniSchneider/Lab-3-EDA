@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "TDAlista.h"
-
 /*------------- estructura de datos -------------*/
 
 typedef struct matrizGrafo 
@@ -9,6 +8,14 @@ typedef struct matrizGrafo
 	int cvertices;
 	int** adyacencias;
 }TDAgrafo;
+
+//Definicion de funciones
+
+TDAgrafo * crearGrafoVacio(int vertices);
+void imprimirMatrizAdyacencia(TDAgrafo* grafo);
+int adyacenciaNodos(TDAgrafo * grafo, int vertA, int vertB);
+void liberarGrafo(TDAgrafo * grafo);
+TDAlista * encontrarVerticesNoConexos(TDAgrafo grafo);
 
 
 /*----------------- operaciones -----------------*/
@@ -46,47 +53,21 @@ void imprimirMatrizAdyacencia(TDAgrafo* grafo)
 
 int adyacenciaNodos(TDAgrafo * grafo, int vertA, int vertB) 
 {
-	if (grafo->adyacencias[vertA - 1][vertB - 1] == 1) 
+	if (grafo->adyacencias[vertA - 1][vertB - 1] != 0)
 	{
 		return 1;
 	}
 	return 0;
 }
 
-
-//NoDirigido NoPonderado
-TDAgrafo* leerGrafoNoDirigido(char *nombreArchivo){
-	FILE*pf;		   //para abrir archivo
-	pf = fopen(nombreArchivo,"r");
-	int n_vertices, m_aristas;
-	int i,j,k;
-	if (pf ==NULL){
-		printf("Error de archivo\n");
-		return NULL;
-	}else{
-		//Cantidad de nodos y aristas
-		fscanf(pf, "%d %d", &n_vertices,&m_aristas); 		
-		TDAgrafo *G=crearGrafoVacio(n_vertices);	
-		//dependiendo de las lineas de archivo, 
-		// 1 para grafo no dirigido no ponderado
-		for(k=0;k<m_aristas;k++){
-			fscanf(pf,"%d %d",&i, &j);
-			G->adyacencias[i-1][j-1] = 1;
-			G->adyacencias[j-1][i-1] = 1;
-		}
-		fclose(pf);
-		return  G;	
-	}
+void liberarGrafo(TDAgrafo * grafo){
+    for (int i = 0; i < grafo->cvertices; ++i) {
+        free(grafo->adyacencias[i]);
+    }
+    free(grafo->adyacencias);
+    free(grafo);
 }
 
-//Actividad 1
-TDAlista* obtenerAdyacentes(TDAgrafo* grafo, int vertice);
-
-//Actividad 2
-int EsCamino( TDAgrafo* grafo, TDAlista* secuencia );
-
-//Actividad 3
-int EsCiclo( TDAgrafo* grafo, TDAlista* secuencia);
 
 
 
