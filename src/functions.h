@@ -180,7 +180,6 @@ int encontrarMejorVertice(pueblo * village){
         else{
             insertarInicio(village->cuarteles,i+1);
             distanciaActual = sumatoriaDistancias(cuartelMasCercano(village),village->grafo->cvertices);
-            printf("distancia actual = %d\n",distanciaActual);
             if ( distanciaActual < distanciaMinima || distanciaMinima == -1){
                 distanciaMinima = distanciaActual;
                 indice = i+1;
@@ -189,4 +188,10 @@ int encontrarMejorVertice(pueblo * village){
         eliminarInicio(village->cuarteles);
     }
     return indice;
+}
+
+void escribirArchivo(char * nombre,int interseccion){
+    FILE * archivo = fopen(nombre,"w");
+    fprintf(archivo,"%d",interseccion);
+    fclose(archivo);
 }
