@@ -13,9 +13,9 @@ typedef struct matrizGrafo
 
 TDAgrafo * crearGrafoVacio(int vertices);
 void imprimirMatrizAdyacencia(TDAgrafo* grafo);
-int adyacenciaNodos(TDAgrafo * grafo, int vertA, int vertB);
+bool adyacenciaNodos(TDAgrafo * grafo, int vertA, int vertB);
 void liberarGrafo(TDAgrafo * grafo);
-TDAlista * encontrarVerticesNoConexos(TDAgrafo grafo);
+TDAlista * obtenerAdyacentes(TDAgrafo * grafo, int vertice);
 
 
 /*----------------- operaciones -----------------*/
@@ -51,13 +51,13 @@ void imprimirMatrizAdyacencia(TDAgrafo* grafo)
 	}
 }
 
-int adyacenciaNodos(TDAgrafo * grafo, int vertA, int vertB) 
+bool adyacenciaNodos(TDAgrafo * grafo, int vertA, int vertB)
 {
-	if (grafo->adyacencias[vertA - 1][vertB - 1] != 0)
+	if (grafo->adyacencias[vertA][vertB] != 0)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 void liberarGrafo(TDAgrafo * grafo){
@@ -66,6 +66,16 @@ void liberarGrafo(TDAgrafo * grafo){
     }
     free(grafo->adyacencias);
     free(grafo);
+}
+
+TDAlista *obtenerAdyacentes(TDAgrafo *grafo, int vertice) {
+    TDAlista * listaAdy = crearListaVacia();
+    for (int i = 0; i < grafo->cvertices; ++i) {
+        if(adyacenciaNodos(grafo,vertice,i)){
+            insertarInicio(listaAdy,i);
+        }
+    }
+    return listaAdy;
 }
 
 

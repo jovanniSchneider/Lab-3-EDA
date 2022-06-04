@@ -25,12 +25,12 @@ TDAlista* crearListaVacia()
   return lista;
 }
 
-int esListaVacia(TDAlista* lista)
+bool esListaVacia(TDAlista* lista)
 {
   if (lista->inicio == NULL)
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 }
 
 void recorrerLista(TDAlista* lista)
